@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Backend FastAPI
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    volumes:
+      - ./backend:/app
+      - backend_data:/app/data
+    networks:
+      - ecommerce_network
+    restart: unless-stopped
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - ecommerce_network
+    restart: unless-stopped
+
+volumes:
+  backend_data:
+
+networks:
+  ecommerce_network:
+    driver: bridge
