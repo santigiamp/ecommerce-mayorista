@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# E-commerce Mayorista
+# Catálogo de productos para revendedores
+
+Sitemap: https://ecommerce-mayorista.vercel.app/sitemap.xml
